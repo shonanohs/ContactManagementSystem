@@ -19,7 +19,7 @@ public class Contact implements Serializable {
 
     public void setName(String name) {
         this.name = name;
-    } // Should use these to edit contacts eventually
+    } // Could use setters to edit contacts eventually instead of removing then adding?
 
     public String getEmail() {
         return email;
@@ -35,6 +35,10 @@ public class Contact implements Serializable {
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
+    }
+
+    public String toFileString() {
+        return name + "," + email + "," + phoneNumber;
     }
 
     @Override

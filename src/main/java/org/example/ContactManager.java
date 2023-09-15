@@ -49,7 +49,7 @@ public class ContactManager {
 
             String userDecision = scanner.nextLine();
             switch (userDecision) {
-                case "1" -> {
+                case "1" -> { // I don't like this nested switch statement
                     System.out.println("Would you like to add contacts from:\n(1) The command line\n(2) A file");
                     String addMethod = scanner.nextLine();
                     switch (addMethod) {
