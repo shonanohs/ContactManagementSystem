@@ -1,9 +1,5 @@
 package org.example.contactcategories;
 
-import org.example.contact.Contact;
-
-import java.util.Scanner;
-
 public interface ContactCategory {
 
     void addContact();
@@ -13,5 +9,11 @@ public interface ContactCategory {
     void viewContacts();
 
     void searchContacts();
+
+    void editContact();
+
+    void readFromFile();
+
+    void writeToFile();
 
 }

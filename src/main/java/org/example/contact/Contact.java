@@ -37,8 +37,6 @@ public class Contact {
 
     @Override
     public String toString() {
-        return name + " | "
-                + email + " | "
-                + phoneNumber;
+        return String.format("%-20s| %-28s| %-25s", name, email, phoneNumber);
     }
 }
