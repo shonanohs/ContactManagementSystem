@@ -1,6 +1,8 @@
 package org.example.contact;
 
-public class Contact {
+import java.io.Serializable;
+
+public class Contact implements Serializable {
     private String name;
     private String email;
     private String phoneNumber;
@@ -17,7 +19,7 @@ public class Contact {
 
     public void setName(String name) {
         this.name = name;
-    }
+    } // Should use these to edit contacts eventually
 
     public String getEmail() {
         return email;
@@ -37,6 +39,6 @@ public class Contact {
 
     @Override
     public String toString() {
-        return String.format("%-20s| %-28s| %-25s", name, email, phoneNumber);
+        return String.format("%-20s| %-30s| %-25s", name, email, phoneNumber);
     }
 }

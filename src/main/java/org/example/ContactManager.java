@@ -13,7 +13,7 @@ public class ContactManager {
 
     public void initialiseProgram() {
         System.out.println("""
-                Welcome to contact manager. Please select a category to manage:
+                Welcome to Contact Manager. Please select a category to manage:
                 (1) Personal contacts
                 (2) Work contacts""");
 
@@ -35,7 +35,7 @@ public class ContactManager {
     public void performOperation(BaseContactCategory category) {
         boolean shouldRepeat = true;
         while (shouldRepeat) {
-            System.out.println("You are currently in your " + category + " contact list.");
+            System.out.println("\nYou are currently in your " + category + " contact list.");
             System.out.println("""
                     Which operation would you like to perform?
                     (1) Add a contact
@@ -50,7 +50,7 @@ public class ContactManager {
             String userDecision = scanner.nextLine();
             switch (userDecision) {
                 case "1" -> {
-                    System.out.println("Would you like to add contacts from\n(1) The command line\n(2) A file ");
+                    System.out.println("Would you like to add contacts from:\n(1) The command line\n(2) A file");
                     String addMethod = scanner.nextLine();
                     switch (addMethod) {
                         case "1" -> {
@@ -75,6 +75,9 @@ public class ContactManager {
                 }
                 case "5" -> {
                     category.editContact();
+                }
+                case "6" -> {
+                    category.writeToFile();
                 }
                 case "7" -> {
                     shouldRepeat = false;
