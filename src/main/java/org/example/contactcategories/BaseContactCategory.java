@@ -3,7 +3,6 @@ package org.example.contactcategories;
 import org.example.contact.Contact;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -57,7 +56,7 @@ public class BaseContactCategory implements ContactCategory {
                     System.out.print("(" + ++count + ") ");
                     System.out.println(c);
                 }
-                int userDecision = scanner.nextInt();
+                int userDecision = scanner.nextInt(); // TODO - scanner breaks here, have to enter number twice
                 scanner.next();
                 contacts.remove(matches.get(userDecision - 1));
                 System.out.println("Contact removed!\n");
@@ -80,7 +79,7 @@ public class BaseContactCategory implements ContactCategory {
     @Override
     public void searchContacts() {
         System.out.println("Enter the name/characters you would like to search for.");
-        String search = scanner.nextLine(); // TODO - fix - scanner is not taking input correctly for some things
+        String search = scanner.nextLine();
         boolean found = false;
         for (Contact contact : contacts) {
             if (contact.getName().contains(search)) {
@@ -146,10 +145,8 @@ public class BaseContactCategory implements ContactCategory {
             }
             System.out.println("Contacts added!\n");
             fis.close();
-        } catch (FileNotFoundException fileNotFoundException) {
-            System.out.println("No such file exists\n");
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            System.out.println("Error when adding contacts. Check your file name and try again. ");
         }
     }
 
@@ -171,9 +168,8 @@ public class BaseContactCategory implements ContactCategory {
         }
     }
 
-    public List<String> getContactDetails() {
+    private List<String> getContactDetails() {
         final String emailREGEX = "^\\S+@[a-zA-Z0-9-]+(?:\\.[a-zA-Z0-9-]+)*$";
-        final String phoneREGEX = "^(\\d{5}[- .]?){3}\\d{3}$";
 
         List<String> contactInfo = new ArrayList<>();
         System.out.println("Name: ");
@@ -182,32 +178,23 @@ public class BaseContactCategory implements ContactCategory {
 
         System.out.println("Email: ");
         String email = scanner.nextLine();
-        boolean isValidEmail = isValidEmailAddrRegex(emailREGEX, email);
-        while (!isValidEmail) {
-            System.out.println("Invalid email. Please enter another email: ");
-            String newEmail = scanner.nextLine();
-            isValidEmail = isValidEmailAddrRegex(emailREGEX, newEmail);
+        String newEmail = null;
+        boolean isValidEmail = Pattern.matches(emailREGEX, email);
+        if (isValidEmail) {
+            contactInfo.add(email);
+        } else {
+            while (!isValidEmail) {
+                System.out.println("Invalid email. Please enter another email: ");
+                newEmail = scanner.nextLine();
+                isValidEmail = Pattern.matches(emailREGEX, newEmail);
+            }
+            contactInfo.add(newEmail);
         }
-        contactInfo.add(email);
 
         System.out.println("Phone number: ");
         String phoneNumber = scanner.nextLine();
-//        boolean isValidPhoneNum = isValidPhoneNumRegex(phoneREGEX, phoneNumber);
-//        while (!isValidPhoneNum) {
-//            System.out.println("Invalid phone number. Please enter another number: ");
-//            String newNumber = scanner.nextLine();
-//            isValidPhoneNum = isValidPhoneNumRegex(phoneREGEX, newNumber);
-//        } // TODO - fix this
         contactInfo.add(phoneNumber);
 
         return contactInfo;
-    }
-
-    public boolean isValidEmailAddrRegex(String emailValidationRegex, String emailAddrToValidate) {
-        return Pattern.matches(emailValidationRegex, emailAddrToValidate);
-    }
-
-    public boolean isValidPhoneNumRegex(String phoneValidationRegex, String phoneNumToValidate) {
-        return Pattern.matches(phoneValidationRegex, phoneNumToValidate);
     }
 }
