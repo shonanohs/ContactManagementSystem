@@ -4,7 +4,6 @@ import org.example.contactcategories.BaseContactCategory;
 import org.example.contactcategories.PersonalContactCategory;
 import org.example.contactcategories.WorkContactCategory;
 
-import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class ContactManager {
@@ -18,22 +17,18 @@ public class ContactManager {
                 (1) Personal contacts
                 (2) Work contacts""");
 
-        try {
-            int userDecision = scanner.nextInt();
-            switch (userDecision) {
-                case 1 -> {
-                    performOperation(personal);
-                }
-                case 2 -> {
-                    performOperation(work);
-                }
-                default -> {
-                    System.out.println("Invalid input. Please enter 1 or 2.");
-                    initialiseProgram();
-                }
+        String userDecision = scanner.nextLine();
+        switch (userDecision) {
+            case "1" -> {
+                performOperation(personal);
             }
-        } catch (InputMismatchException ime) {
-            // initialiseProgram(); // TODO figure out why this breaks - infinitely calls initialiseProgram
+            case "2" -> {
+                performOperation(work);
+            }
+            default -> {
+                System.out.println("Invalid input. Please enter 1 or 2.");
+                initialiseProgram();
+            }
         }
     }
 
@@ -48,41 +43,44 @@ public class ContactManager {
                     (3) View contacts
                     (4) Search contacts
                     (5) Edit a contact
-                    (6) Write contacts to file
+                    (6) Save contacts to file
                     (7) Switch categories
                     (8) Exit program""");
-            int userDecision = scanner.nextInt();
+
+            String userDecision = scanner.nextLine();
             switch (userDecision) {
-                case 1 -> {
+                case "1" -> {
                     System.out.println("Would you like to add contacts from\n(1) The command line\n(2) A file ");
-                    int addMethod = scanner.nextInt();
-                    scanner.next();
+                    String addMethod = scanner.nextLine();
                     switch (addMethod) {
-                        case 1 -> {
+                        case "1" -> {
                             category.addContact();
                         }
-                        case 2 -> {
+                        case "2" -> {
                             category.readFromFile();
+                        }
+                        default -> {
+                            System.out.println("Invalid input. Please enter 1 or 2.");
                         }
                     }
                 }
-                case 2 -> {
+                case "2" -> {
                     category.removeContact();
                 }
-                case 3 -> {
+                case "3" -> {
                     category.viewContacts();
                 }
-                case 4 -> {
+                case "4" -> {
                     category.searchContacts();
                 }
-                case 5 -> {
+                case "5" -> {
                     category.editContact();
                 }
-                case 7 -> {
+                case "7" -> {
                     shouldRepeat = false;
                     initialiseProgram();
                 }
-                case 8 -> {
+                case "8" -> {
                     shouldRepeat = false;
                 }
                 default -> {

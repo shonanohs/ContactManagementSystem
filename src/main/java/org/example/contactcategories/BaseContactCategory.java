@@ -2,6 +2,9 @@ package org.example.contactcategories;
 
 import org.example.contact.Contact;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -120,11 +123,42 @@ public class BaseContactCategory implements ContactCategory {
 
     @Override
     public void readFromFile() {
-
+        System.out.println("Please enter the file path of the csv file to read from " +
+                "(e.g. src/main/resources/Contacts.csv).\nThere should be no headers and " +
+                "columns should be filled in the following order: name, email. phone number. ");
+        String filePath = scanner.nextLine();
+        try {
+            FileInputStream fis = new FileInputStream(filePath);
+            Scanner fileScanner = new Scanner(fis);
+            while (fileScanner.hasNextLine()) {
+                String input = fileScanner.nextLine();
+                String[] splitInput = input.split(",");
+                contacts.add(new Contact(splitInput[0], splitInput[1], splitInput[2]));
+                System.out.println("Contacts added!\n");
+            }
+            fis.close();
+        } catch (FileNotFoundException fileNotFoundException) {
+            System.out.println("No such file exists\n");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
     public void writeToFile() {
+        System.out.println("Would you like to:\n(1) Create a new file\n(2) Write to an existing file?");
+        String userDecision = scanner.nextLine();
+        switch (userDecision) {
+            case "1" -> {
+
+            }
+            case "2" -> {
+
+            }
+            default -> {
+                System.out.println("Invalid input. Please enter 1 or 2.");
+            }
+        }
 
     }
 
@@ -153,7 +187,7 @@ public class BaseContactCategory implements ContactCategory {
 //        while (!isValidPhoneNum) {
 //            System.out.println("Invalid phone number. Please enter another number: ");
 //            String newNumber = scanner.nextLine();
-//            isValidPhoneNum = isValidPhoneNumRegex(emailREGEX, newNumber);
+//            isValidPhoneNum = isValidPhoneNumRegex(phoneREGEX, newNumber);
 //        } // TODO fix this
         contactInfo.add(phoneNumber);
 
