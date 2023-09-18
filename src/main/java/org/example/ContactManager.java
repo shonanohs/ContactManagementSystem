@@ -32,7 +32,7 @@ public class ContactManager {
         }
     }
 
-    private void performOperation(BaseContactCategory category) {
+    public void performOperation(BaseContactCategory category) {
         boolean shouldRepeat = true;
         while (shouldRepeat) {
             System.out.println("\nYou are currently in your " + category + " contact list.");

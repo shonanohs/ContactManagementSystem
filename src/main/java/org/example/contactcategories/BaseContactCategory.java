@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
-public class BaseContactCategory implements ContactCategory {
+public abstract class BaseContactCategory implements ContactCategory {
     public List<Contact> contacts = new ArrayList<>();
     private Scanner scanner = new Scanner(System.in);
 
@@ -179,14 +179,14 @@ public class BaseContactCategory implements ContactCategory {
         System.out.println("Email: ");
         String email = scanner.nextLine();
         String newEmail = null;
-        boolean isValidEmail = Pattern.matches(emailREGEX, email);
+        boolean isValidEmail = validateEmail(emailREGEX, email);
         if (isValidEmail) {
             contactInfo.add(email);
         } else {
             while (!isValidEmail) {
                 System.out.println("Invalid email. Please enter another email: ");
                 newEmail = scanner.nextLine();
-                isValidEmail = Pattern.matches(emailREGEX, newEmail);
+                isValidEmail = validateEmail(emailREGEX, newEmail);
             }
             contactInfo.add(newEmail);
         }
@@ -196,5 +196,9 @@ public class BaseContactCategory implements ContactCategory {
         contactInfo.add(phoneNumber);
 
         return contactInfo;
+    }
+
+    public boolean validateEmail(String emailREGEX, String email) {
+        return Pattern.matches(emailREGEX, email);
     }
 }
